@@ -1,0 +1,10 @@
+db.createUser({
+  user: 'user',
+  pwd: 'strongPassword',
+  roles: [
+    {
+      role: 'readWrite',
+      db: 'snake',
+    },
+  ],
+});
