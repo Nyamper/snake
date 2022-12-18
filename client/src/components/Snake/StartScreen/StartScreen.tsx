@@ -46,7 +46,9 @@ const StartScreen: React.FC<{ handleGameStart: Function }> = ({
             sx={{ mt: 3 }}
             onChange={handleInput}
           />
-          {name.length < 3 && <div>name should not be empty</div>}
+          {name.length < 3 && (
+            <div style={{ color: 'red' }}>name should not be empty</div>
+          )}
           <Button
             variant="outlined"
             fullWidth

@@ -7,7 +7,6 @@ const Stats: React.FC<{
   gameStart: boolean;
   time: { seconds: number; minutes: number; hours: number };
   handleGamePause: Function;
-  // reset: Function;
 }> = ({ handleGamePause, score, time, gameStart }) => {
   const { canvasHeight, canvasWidth } = initialState;
   const { seconds, minutes, hours } = time;

@@ -1,10 +1,11 @@
 import React, { useRef, useEffect, useState, KeyboardEvent } from 'react';
 import { useStopwatch } from 'react-timer-hook';
-import { useAxios } from '../../hooks/useAxios';
 
 import Stats from './Stats';
 import Leaderboard from './Leaderboard';
 import StartScreen from './StartScreen';
+
+import { Box } from '@mui/material';
 
 import { postLeaderboard } from '../../api/leaderboard';
 
@@ -13,11 +14,9 @@ import { initialState, Keys } from '../../constants';
 
 import { TLeaderboard } from '../../types/types';
 
-import { Box } from '@mui/material';
-
 const Snake: React.FC<{}> = () => {
-  const { seconds, minutes, hours, start, pause, reset } = useStopwatch({
-    autoStart: true,
+  const { seconds, minutes, hours, start, pause } = useStopwatch({
+    autoStart: false,
   });
   const {
     canvasScale,
@@ -36,7 +35,6 @@ const Snake: React.FC<{}> = () => {
   const [score, setScore] = useState(initialState.score);
   const [speed, setSpeed] = useState(initialSpeed);
   const [username, setUsername] = useState<string>('');
-  // const { board, isError, isLoading } = useAxiosGet();
 
   let canvasRef = useRef<HTMLCanvasElement | null>(null);
   let canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -110,6 +108,7 @@ const Snake: React.FC<{}> = () => {
   const handleGameStart = (name: string) => {
     setGameStart(true);
     setUsername(name);
+    start();
   };
 
   const handlePlayGame = () => {
@@ -216,6 +215,7 @@ const Snake: React.FC<{}> = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            my: 5,
           }}
           tabIndex={0}
           onKeyDown={(event: KeyboardEvent) => handleKeys(event)}
