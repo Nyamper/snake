@@ -201,7 +201,6 @@ const Snake: React.FC<{}> = () => {
   const sendStatistic = (
     stats: Pick<TLeaderboard, 'username' | 'time' | 'score'>
   ) => {
-    console.log('first');
     postLeaderboard(stats);
   };
 
@@ -233,7 +232,6 @@ const Snake: React.FC<{}> = () => {
             width={canvasWidth}
             height={canvasHeight}
           ></canvas>
-          <button onClick={handleGameEnd}>send stats</button>
         </Box>
       )}
     </>
