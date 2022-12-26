@@ -37,7 +37,6 @@ const StartScreen: React.FC<{ handleGameStart: Function }> = ({
           <Typography variant="h5" sx={{ mt: 5 }}>
             Speed up every 50 points
           </Typography>
-
           <TextField
             id="outlined-basic"
             label="Name"

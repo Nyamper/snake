@@ -10,7 +10,6 @@ class LeaderboardController {
       console.log(req.body);
       return res.status(200).json(player);
     } catch (error: any) {
-      console.log(error);
       return res.status(400).json(error);
     }
   }
