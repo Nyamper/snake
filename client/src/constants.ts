@@ -1,5 +1,3 @@
-export const baseURL = 'http://localhost/api';
-
 export const initialState = {
   gameStart: false,
   alive: true,
@@ -29,15 +27,3 @@ export enum Keys {
   Down = 'ArrowDown',
   Left = 'ArrowLeft',
 }
-
-// export enum GameStatus {
-//   Start = 'START',
-//   Pause = 'PAUSE',
-//   Stop = 'STOP',
-// }
-
-// Up keyCode 38
-// Down keyCode 40
-// Left keyCode 37
-// Right keyCode 39
-// Space keyCode 32

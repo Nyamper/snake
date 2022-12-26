@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { baseURL } from '../constants';
 
 const client = axios.create({
-  baseURL: baseURL,
+  baseURL: process.env.REACT_APP_BASE_URL || '',
 });
 
 client.interceptors.response.use(
