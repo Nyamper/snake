@@ -12,7 +12,7 @@ import { postLeaderboard } from '../../api/leaderboard';
 import { random, calcTime } from '../../utils/utils';
 import { initialState, Keys } from '../../constants';
 
-import { TLeaderboard } from '../../types/types';
+import { TLeaderboard, PartialLeaderboard } from '../../types/types';
 
 const Snake: React.FC<{}> = () => {
   const { seconds, minutes, hours, start, pause } = useStopwatch({
@@ -34,6 +34,7 @@ const Snake: React.FC<{}> = () => {
   const [snake, setSnake] = useState(initialSnake);
   const [score, setScore] = useState(initialState.score);
   const [speed, setSpeed] = useState(initialSpeed);
+  const [response, setResponse] = useState<PartialLeaderboard | null>(null);
   const [username, setUsername] = useState<string>('');
 
   let canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -43,6 +44,8 @@ const Snake: React.FC<{}> = () => {
     if (canvasRef.current) {
       canvasCtxRef.current = canvasRef.current.getContext('2d');
       let ctx = canvasCtxRef.current;
+
+      canvasRef.current.focus();
 
       ctx!.setTransform(canvasScale, 0, 0, canvasScale, 0, 0);
 
@@ -197,10 +200,11 @@ const Snake: React.FC<{}> = () => {
     }
   };
 
-  const sendStatistic = (
+  const sendStatistic = async (
     stats: Pick<TLeaderboard, 'username' | 'time' | 'score'>
   ) => {
-    postLeaderboard(stats);
+    const response = await postLeaderboard(stats);
+    response ? setResponse(response) : setResponse(null);
   };
 
   return (
@@ -208,7 +212,8 @@ const Snake: React.FC<{}> = () => {
       {!gameStart && alive && !username && (
         <StartScreen handleGameStart={handleGameStart} />
       )}
-      {!gameStart && !alive && <Leaderboard />}
+      {!gameStart && !alive && response && <Leaderboard />}
+      {!gameStart && !alive && !response && <div>sending statistic</div>}
       {username && alive && (
         <Box
           sx={{
@@ -217,8 +222,6 @@ const Snake: React.FC<{}> = () => {
             justifyContent: 'center',
             my: 5,
           }}
-          tabIndex={0}
-          onKeyDown={(event: KeyboardEvent) => handleKeys(event)}
         >
           <Stats
             score={score}
@@ -227,6 +230,8 @@ const Snake: React.FC<{}> = () => {
             handleGamePause={handleGamePause}
           />
           <canvas
+            tabIndex={0}
+            onKeyDown={(event: KeyboardEvent) => handleKeys(event)}
             ref={canvasRef}
             style={{ border: '3px solid black' }}
             width={canvasWidth}

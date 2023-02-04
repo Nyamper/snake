@@ -41,7 +41,9 @@ const Leaderboard: React.FC<{}> = ({}) => {
                     </TableCell>
                     <TableCell align="right">{player.time}</TableCell>
                     <TableCell align="right">{player.score}</TableCell>
-                    <TableCell align="right">{player.createdAt}</TableCell>
+                    <TableCell align="right">
+                      {player.createdAt.slice(0, 10)}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
